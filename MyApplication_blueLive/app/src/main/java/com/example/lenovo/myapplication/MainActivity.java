@@ -160,12 +160,16 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+//                Message msg = handler.obtainMessage();
+//                msg.what= UPDATE_PROGRESS;
+//                msg.arg1 = 0;
+//                msg.sendToTarget();
                 int progress = 0;
                 while(!stop){
                     if(progress>=100){
                         break;
                     }
-                    Message msg = handler.obtainMessage();
+
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -174,17 +178,13 @@ public class MainActivity extends AppCompatActivity {
                     if(titleinfo!=0){
                         if(progress<=titleinfo){
                             progress+=1;
-//                        Message msg2=handler.obtainMessage();
-//                        msg2.what=1;
-//                        msg2.arg1=progress;
-//                        msg2.sendToTarget();
+                        Message msg2=handler.obtainMessage();
+                        msg2.what=1;
+                        msg2.arg1=progress;
+                        msg2.sendToTarget();
                         }
                     }
 
-
-                    msg.what= UPDATE_PROGRESS;
-                    msg.arg1 = progress;
-                    msg.sendToTarget();
                 }
                 progress = 0;
             }

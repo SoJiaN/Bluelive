@@ -23,7 +23,7 @@ public class SetSongTitle extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent_title=new Intent();
-                intent_title.putExtra("editText_info",editText.getText().toString());
+                intent_title.putExtra("editText_info",Integer.parseInt(editText.getText().toString()));
                 Log.e("SSSSDFIS",editText.getText().toString());
                 SetSongTitle.this.setResult(RESULT_OK,intent_title);
                 SetSongTitle.this.finish();
