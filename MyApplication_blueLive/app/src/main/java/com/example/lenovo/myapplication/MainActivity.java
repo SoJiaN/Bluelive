@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         liA.setData(songArrayList);
 
 
-
+        mydownload(songProgressbar,25);
 
 //        if(!isDownloading){
 //            stop = false;
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(titleinfo!=0){
                         if(progress<=titleinfo){
-                            progress+=0.5;
+                            progress+=1;
 //                        Message msg2=handler.obtainMessage();
 //                        msg2.what=1;
 //                        msg2.arg1=progress;
