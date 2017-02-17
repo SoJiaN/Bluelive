@@ -22,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
     private SongView mSongView;
     private ListView mlistView;
     private ArrayList<itemBean> songArrayList;
-    private String titleinfo;
+    private int titleinfo = 0;
     private String[] date;
     private itemBean itemBean1=new itemBean("圆圈百分比",titleinfo+"%");
     private itemBean itemBean2=new itemBean("绿色曲线","4,5,6,7");
     private itemBean itemBean3=new itemBean("灰色曲线",titleinfo+"%");
 
     boolean flag=false;
-
+    //圆形进度条
     SongProgressbar songProgressbar;
     Handler handler = new Handler(){
         public void handleMessage(Message msg) {
@@ -41,11 +41,9 @@ public class MainActivity extends AppCompatActivity {
 //                        btnDownload.setText("下载");
                     }
                     break;
-//                case 1:
-//                    songProgressbar.setSchedule(msg.arg1);
-//                    if(msg.arg1>=){
-//
-//                    }
+                case 1:
+                    songProgressbar.setSchedule(msg.arg1);
+
                 default:
                     break;
             }
@@ -87,24 +85,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(!isDownloading){
-            stop = false;
-            isDownloading = true;
-//            btnDownload.setText("停止");
-
-//            if(titleinfo!=null){
-//                SongProgressbar.percent=titleinfo;
-//                stop = false;
-//                isDownloading = true;
-//                mydownload(songProgressbar,titleinfo);
-//            }
-
-            mydownload(songProgressbar,"25");
-        }else{
-            isDownloading = false;
-            stop = true;
-            btnDownload.setText("下载");
-        }
+//        if(!isDownloading){
+//            stop = false;
+//            isDownloading = true;
+////            btnDownload.setText("停止");
+//
+////            if(titleinfo!=null){
+////                SongProgressbar.percent=titleinfo;
+////                stop = false;
+////                isDownloading = true;
+////                mydownload(songProgressbar,titleinfo);
+////            }
+//
+//            mydownload(songProgressbar,"25");
+//        }else{
+//            isDownloading = false;
+//            stop = true;
+//            btnDownload.setText("下载");
+//        }
 
 
 
@@ -125,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-
+        // 平滑曲线scrollview
         mSongView = (SongView) findViewById(R.id.songView);
         mSongView.setRate(5);
         mSongView.setLoop(false);
@@ -154,10 +152,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mydownload(songProgressbar,titleinfo);
+//        mydownload(songProgressbar,titleinfo);
     }
 
-    private void mydownload(SongProgressbar songProgressbar, final String titleinfo){
+    private void mydownload(SongProgressbar songProgressbar, final int titleinfo){
 
         new Thread(new Runnable() {
             @Override
@@ -173,9 +171,9 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if(titleinfo!=null){
-                        if(progress<=Integer.parseInt(titleinfo)){
-                            progress+=1;
+                    if(titleinfo!=0){
+                        if(progress<=titleinfo){
+                            progress+=0.5;
 //                        Message msg2=handler.obtainMessage();
 //                        msg2.what=1;
 //                        msg2.arg1=progress;
@@ -205,12 +203,13 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==1){
             boolean flag=true;
-            titleinfo=data.getExtras().getString("editText_info");
+//            titleinfo=data.getExtras().getString("editText_info");
+            titleinfo = data.getExtras().getInt("editText_info");
             itemBean1.number=titleinfo+"%";
 
-//            mydownload(songProgressbar,titleinfo);
+            mydownload(songProgressbar,titleinfo);
 
-            Log.e("!@#$%^&*()!@#$%^&*(", Integer.parseInt(titleinfo)+"");
+            Log.e("!@#$%^&*()!@#$%^&*(", titleinfo + "");
         }
         if(requestCode==2){
             for(int i=0;i<15;i++){
